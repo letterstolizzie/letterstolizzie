@@ -94,14 +94,14 @@
     .env-stack {
       position: relative;
       width: 320px;
-      height: 460px;
+      height: 500px;
       cursor: pointer;
     }
 
     /* layer 1 (back): full open envelope with flap — sits behind everything */
     .env-stack .layer-flap {
       position: absolute;
-      top: 0; left: 50%; transform: translateX(-50%);
+      bottom: 0; left: 50%; transform: translateX(-50%);
       width: 320px;
       z-index: 1;
       pointer-events: none;
@@ -110,14 +110,14 @@
     /* layer 2 (middle): letter paper — slides up between body and flap */
     .env-stack .layer-letter {
       position: absolute;
-      bottom: 100px; left: 50%; transform: translateX(-50%);
+      bottom: 160px; left: 50%; transform: translateX(-50%);
       width: 240px;
       z-index: 2;
       transition: bottom 0.7s cubic-bezier(0.4,0,0.2,1);
       filter: drop-shadow(0 4px 12px rgba(155,123,138,0.15));
     }
     .env-stack.pulled .layer-letter {
-      bottom: 190px;
+      bottom: 250px;
     }
 
     /* layer 3 (front): envelope body — covers bottom of letter so it looks tucked inside */
