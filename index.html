@@ -50,7 +50,7 @@
     }
 
     /* HERO */
-    #home { background: #fff; position: relative; overflow: hidden; }
+    #home { background: var(--cream); position: relative; overflow: hidden; }
 
     .petal {
       position: absolute; border-radius: 50% 0 50% 0;
@@ -66,14 +66,13 @@
     /* ── ENVELOPE SCENE ── */
     .envelope-scene {
       display: flex; flex-direction: column; align-items: center; gap: 1rem;
-      user-select: none;
+      user-select: none; background: transparent;
     }
 
     .scene-title {
       font-family: 'Satisfy', cursive;
       font-size: clamp(2rem, 5vw, 3rem);
-      color: var(--rose);
-      margin-bottom: 0.5rem;
+      color: var(--rose); margin-bottom: 0.5rem;
     }
 
     /* STATE 0: closed envelope */
@@ -85,15 +84,50 @@
     .env-closed:hover { transform: translateY(-4px); }
     .env-closed img { width: 300px; filter: drop-shadow(0 8px 24px rgba(155,123,138,0.18)); }
 
-    /* STATE 1: open envelope with peeking letter */
+    /* STATE 1: layered open envelope */
     .env-open {
-      cursor: pointer;
       display: none;
       flex-direction: column; align-items: center; gap: 0.7rem;
-      position: relative;
     }
-    .env-open img { width: 300px; filter: drop-shadow(0 8px 24px rgba(155,123,138,0.18)); transition: transform 0.3s; }
-    .env-open:hover img { transform: translateY(-4px); }
+
+    /* the 3-layer stack */
+    .env-stack {
+      position: relative;
+      width: 320px;
+      height: 420px;
+      cursor: pointer;
+    }
+
+    /* layer 1: envelope body — bottom */
+    .env-stack .layer-body {
+      position: absolute;
+      bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 320px;
+      z-index: 1;
+      filter: drop-shadow(0 8px 24px rgba(155,123,138,0.15));
+    }
+
+    /* layer 2: letter paper — slides up on click */
+    .env-stack .layer-letter {
+      position: absolute;
+      bottom: 120px; left: 50%; transform: translateX(-50%);
+      width: 260px;
+      z-index: 2;
+      transition: bottom 0.7s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
+      filter: drop-shadow(0 4px 12px rgba(155,123,138,0.2));
+    }
+    .env-stack.pulled .layer-letter {
+      bottom: 300px;
+    }
+
+    /* layer 3: envelope flap — always on top */
+    .env-stack .layer-flap {
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 320px;
+      z-index: 3;
+      pointer-events: none;
+    }
 
     /* hint text */
     .env-hint {
@@ -114,14 +148,17 @@
     .letter-modal.show { display: flex; }
 
     .letter-paper {
-      background: #fdf8f8;
-      max-width: 500px; width: 100%;
+      max-width: 480px; width: 100%;
       border-radius: 3px;
-      padding: 2.8rem 3rem;
-      box-shadow: 0 24px 64px rgba(90,74,82,0.22);
       position: relative;
       animation: slideUp 0.4s cubic-bezier(0.4,0,0.2,1);
-      max-height: 88vh; overflow-y: auto;
+      background: transparent;
+      box-shadow: none;
+      padding: 0;
+    }
+    .letter-paper img.letter-img {
+      width: 100%; display: block; border-radius: 3px;
+      box-shadow: 0 24px 64px rgba(90,74,82,0.25);
     }
     @keyframes slideUp {
       from { transform: translateY(28px); opacity: 0; }
@@ -297,10 +334,17 @@
       <span class="env-hint">(click to open)</span>
     </div>
 
-    <!-- STATE 1: open envelope + peeking letter -->
+    <!-- STATE 1: layered open envelope -->
     <div class="env-open" id="envOpen">
-      <img src="envelope-open.png" id="peekLetter" alt="An open envelope with a letter peeking out" style="width:320px;filter:drop-shadow(0 8px 24px rgba(155,123,138,0.2));cursor:pointer;transition:transform 0.3s;" />
-      <span class="env-hint" style="margin-top:0.3rem;">(click letter to read)</span>
+      <div class="env-stack" id="envStack">
+        <!-- bottom layer: envelope body -->
+        <img class="layer-body" src="envelope-body.png" alt="" />
+        <!-- middle layer: letter paper (slides up) -->
+        <img class="layer-letter" id="layerLetter" src="letter-paper.png" alt="Welcome letter" />
+        <!-- top layer: envelope flap (always on top) -->
+        <img class="layer-flap" src="envelope-flap.png" alt="" />
+      </div>
+      <span class="env-hint" id="envHint">(click to pull out letter)</span>
     </div>
   </div>
 </section>
@@ -308,9 +352,9 @@
 <!-- LETTER MODAL -->
 <div class="letter-modal" id="letterModal">
   <div class="letter-paper">
-    <!-- ornate border SVG -->
-    <img src="letter-full.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:fill;border-radius:3px;pointer-events:none;" alt="" />
-    <svg class="letter-ornate-border" viewBox="0 0 460 560" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:none;">
+    <button class="letter-close" id="letterClose" style="position:absolute;top:-1.8rem;right:0;background:none;border:none;cursor:pointer;font-size:1.2rem;color:white;z-index:2;">✕</button>
+    <img class="letter-img" src="letter-full.png" alt="Welcome letter from letterstolizzie" />
+    <svg style="display:none;">
       <!-- outer border -->
       <rect x="4" y="4" width="452" height="552" rx="2" fill="none" stroke="#c4748a" stroke-width="0.8" opacity="0.4"/>
       <!-- inner border -->
@@ -355,18 +399,6 @@
         <circle cx="453" cy="260" r="2.5" fill="#c4748a" opacity="0.4"/>
       </g>
     </svg>
-
-    <button class="letter-close" id="letterClose">✕</button>
-    <div class="letter-welcome-head">Welcome!</div>
-    <div class="letter-body-text">
-      <p>This is a small community inspired by Lizzie Young and her journey of healing, learning, surviving, and living.</p>
-      <p>Here, we'll celebrate her grief and her rage, as well as her gentleness and strength, because maybe in loving her so loudly, we're learning to love those same parts of ourselves.</p>
-      <p>Whether you're here to write a letter, share an edit, or just read quietly from the sidelines—you belong here.</p>
-      <p>More soon!</p>
-    </div>
-    <div class="letter-sign">With Love,<br><br>
-      <span style="font-family:'Satisfy',cursive;font-size:1.3rem;color:var(--rose);">@letterstolizzie</span>
-    </div>
   </div>
 </div>
 
@@ -490,26 +522,39 @@
     document.getElementById('home').appendChild(p);
   }
 
-  const envClosed = document.getElementById('envClosed');
-  const envOpen   = document.getElementById('envOpen');
-  const peekLetter = document.getElementById('peekLetter');
-  const modal     = document.getElementById('letterModal');
-  const closeBtn  = document.getElementById('letterClose');
+  const envClosed  = document.getElementById('envClosed');
+  const envOpen    = document.getElementById('envOpen');
+  const envStack   = document.getElementById('envStack');
+  const layerLetter = document.getElementById('layerLetter');
+  const envHint    = document.getElementById('envHint');
+  const modal      = document.getElementById('letterModal');
+  const closeBtn   = document.getElementById('letterClose');
 
-  // Step 1: click closed envelope → show open
+  // Step 1: click closed envelope → show open layered envelope
   envClosed.addEventListener('click', () => {
     envClosed.style.display = 'none';
     envOpen.style.display = 'flex';
   });
 
-  // Step 2: click peeking letter → show modal
-  peekLetter.addEventListener('click', (e) => {
-    e.stopPropagation();
-    modal.classList.add('show');
+  // Step 2: click envelope stack → letter slides up
+  envStack.addEventListener('click', () => {
+    if (!envStack.classList.contains('pulled')) {
+      envStack.classList.add('pulled');
+      envHint.textContent = '(click letter to read)';
+    } else {
+      // Step 3: already pulled, click again → open modal
+      modal.classList.add('show');
+    }
   });
 
   closeBtn.addEventListener('click', () => modal.classList.remove('show'));
   modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('show'); });
+
+  // Send letter
+  document.getElementById('sendBtn').addEventListener('click', () => {
+    document.getElementById('letterForm').style.display = 'none';
+    document.getElementById('sentMsg').style.display = 'block';
+  });
 
   // Send letter
   document.getElementById('sendBtn').addEventListener('click', () => {
