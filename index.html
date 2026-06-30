@@ -94,39 +94,39 @@
     .env-stack {
       position: relative;
       width: 320px;
-      height: 420px;
+      height: 460px;
       cursor: pointer;
     }
 
-    /* layer 1: envelope flap — TOP layer always, so letter slides behind it */
+    /* layer 1 (back): full open envelope with flap — sits behind everything */
     .env-stack .layer-flap {
       position: absolute;
       top: 0; left: 50%; transform: translateX(-50%);
       width: 320px;
-      z-index: 3;
+      z-index: 1;
       pointer-events: none;
     }
 
-    /* layer 2: letter paper — middle, starts mostly hidden, slides up slightly */
+    /* layer 2 (middle): letter paper — slides up between body and flap */
     .env-stack .layer-letter {
       position: absolute;
-      bottom: 90px; left: 50%; transform: translateX(-50%);
-      width: 255px;
+      bottom: 30px; left: 50%; transform: translateX(-50%);
+      width: 240px;
       z-index: 2;
       transition: bottom 0.7s cubic-bezier(0.4,0,0.2,1);
       filter: drop-shadow(0 4px 12px rgba(155,123,138,0.15));
     }
     .env-stack.pulled .layer-letter {
-      bottom: 160px;
+      bottom: 180px;
     }
 
-    /* layer 3: envelope body — bottom */
+    /* layer 3 (front): envelope body — covers bottom of letter so it looks tucked inside */
     .env-stack .layer-body {
       position: absolute;
       bottom: 0; left: 50%; transform: translateX(-50%);
       width: 320px;
-      z-index: 1;
-      filter: drop-shadow(0 8px 24px rgba(155,123,138,0.15));
+      z-index: 3;
+      pointer-events: none;
     }
 
     /* hint text */
@@ -335,12 +335,12 @@
     <!-- STATE 1: layered open envelope -->
     <div class="env-open" id="envOpen">
       <div class="env-stack" id="envStack">
-        <!-- bottom layer: envelope body -->
-        <img class="layer-body" src="envelope-body.png" alt="" />
-        <!-- middle layer: letter paper (slides up) -->
+        <!-- back: open envelope with flap (z-index 1) -->
+        <img class="layer-flap" src="envelope-open.png" alt="" />
+        <!-- middle: letter slides up (z-index 2) -->
         <img class="layer-letter" id="layerLetter" src="letter-paper.png" alt="Welcome letter" />
-        <!-- top layer: envelope flap (always on top) -->
-        <img class="layer-flap" src="envelope-flap.png" alt="" />
+        <!-- front: envelope body covers letter bottom (z-index 3) -->
+        <img class="layer-body" src="envelope-body.png" alt="" />
       </div>
       <span class="env-hint" id="envHint">(click to pull out letter)</span>
     </div>
