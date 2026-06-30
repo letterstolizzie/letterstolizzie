@@ -110,21 +110,21 @@
     /* layer 2 (middle): letter paper — slides up between body and flap */
     .env-stack .layer-letter {
       position: absolute;
-      bottom: 190px; left: 50%; transform: translateX(-50%);
+      bottom: 100px; left: 50%; transform: translateX(-50%);
       width: 240px;
       z-index: 2;
       transition: bottom 0.7s cubic-bezier(0.4,0,0.2,1);
       filter: drop-shadow(0 4px 12px rgba(155,123,138,0.15));
     }
     .env-stack.pulled .layer-letter {
-      bottom: 280px;
+      bottom: 190px;
     }
 
     /* layer 3 (front): envelope body — covers bottom of letter so it looks tucked inside */
     .env-stack .layer-body {
       position: absolute;
       bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 320px;
+      width: 340px;
       z-index: 3;
       pointer-events: none;
     }
