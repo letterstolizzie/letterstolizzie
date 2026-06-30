@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>letters to lizzie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Lato:wght@300;400&family=Satisfy&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blush: #e8c9c9;
+      --rose: #c4748a;
+      --cream: #faf6f0;
+      --parchment: #f0e8dc;
+      --env: #f0ebe0;
+      --mauve: #9b7b8a;
+      --text: #5a4a52;
+      --soft: #8a7a82;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: center; gap: 2.5rem;
+      padding: 1.2rem 2rem;
+      background: rgba(250,246,240,0.93);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(196,116,138,0.15);
+      font-size: 0.75rem; letter-spacing: 0.13em; text-transform: uppercase;
+    }
+    nav a { color: var(--soft); text-decoration: none; transition: color 0.25s; }
+    nav a:hover { color: var(--rose); }
+    .nav-brand {
+      font-family: 'Satisfy', cursive; font-size: 1.15rem;
+      text-transform: none; letter-spacing: 0; color: var(--rose) !important;
+    }
+    section {
+      min-height: 100vh; padding: 7rem 2rem 5rem;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    #home { background: #fff; position: relative; overflow: hidden; }
+    .petal {
+      position: absolute; border-radius: 50% 0 50% 0;
+      opacity: 0; animation: floatPetal linear infinite; pointer-events: none;
+    }
+    @keyframes floatPetal {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.45; }
+      90%  { opacity: 0.25; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+    .envelope-scene {
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+      user-select: none;
+    }
+    .scene-title {
+      font-family: 'Satisfy', cursive;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--rose); margin-bottom: 0.5rem;
+    }
+    .env-closed {
+      cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 0.7rem;
+      transition: transform 0.3s;
+    }
+    .env-closed:hover { transform: translateY(-4px); }
+    .env-svg-wrap { position: relative; width: 320px; height: 240px; }
+    .env-open {
+      cursor: pointer; display: none;
+      flex-direction: column; align-items: center; gap: 0.7rem;
+      position: relative; width: 320px;
+    }
+    .env-open:hover .peek-letter { transform: translateY(-8px); }
+    .peek-letter {
+      position: relative; z-index: 2; width: 260px;
+      background: #fdf8f8; border-radius: 3px;
+      padding: 1.4rem 1.6rem 1rem;
+      box-shadow: 0 4px 20px rgba(155,123,138,0.15);
+      transform: translateY(0px); transition: transform 0.3s;
+      margin-bottom: -80px;
+    }
+    .peek-border {
+      border: 1px solid rgba(196,116,138,0.3);
+      padding: 0.8rem 1rem; text-align: center;
+    }
+    .peek-welcome {
+      font-family: 'Satisfy', cursive;
+      font-size: 1.6rem; color: var(--rose); margin-bottom: 0.5rem;
+    }
+    .peek-text { font-size: 0.78rem; color: var(--soft); line-height: 1.7; text-align: center; }
+    .env-hint {
+      color: var(--rose); font-family: 'Satisfy', cursive; font-size: 1rem;
+      opacity: 0.75; animation: pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:0.6} 50%{opacity:1} }
+    .letter-modal {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(90,74,82,0.45); backdrop-filter: blur(5px);
+      align-items: center; justify-content: center; padding: 2rem;
+    }
+    .letter-modal.show { display: flex; }
+    .letter-paper {
+      background: #fdf8f8; max-width: 500px; width: 100%;
+      border-radius: 3px; padding: 2.8rem 3rem;
+      box-shadow: 0 24px 64px rgba(90,74,82,0.22);
+      position: relative; animation: slideUp 0.4s cubic-bezier(0.4,0,0.2,1);
+      max-height: 88vh; overflow-y: auto;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(28px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+    .letter-ornate-border { position: absolute; inset: 12px; pointer-events: none; }
+    .letter-close {
+      position: absolute; top: 1rem; right: 1.2rem;
+      background: none; border: none; cursor: pointer;
+      font-size: 1.1rem; color: var(--soft); z-index: 2;
+    }
+    .letter-welcome-head {
+      font-family: 'Satisfy', cursive; font-size: 2.2rem; color: var(--rose);
+      text-align: center; margin-bottom: 1.6rem;
+    }
+    .letter-body-text { font-size: 0.88rem; color: #7a6070; line-height: 2; text-align: center; }
+    .letter-body-text p { margin-bottom: 1.2rem; }
+    .letter-sign { margin-top: 1.6rem; text-align: center; font-size: 0.82rem; color: var(--soft); }
+    .divider {
+      width: 50px; height: 1px;
+      background: linear-gradient(90deg,transparent,var(--rose),transparent);
+      margin: 0 auto 2.8rem;
+    }
+    .section-eyebrow {
+      font-size: 0.68rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--rose);
+      margin-bottom: 0.5rem; text-align: center;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      color: var(--mauve); text-align: center; margin-bottom: 0.8rem;
+    }
+    .section-desc {
+      font-size: 0.86rem; color: var(--soft);
+      text-align: center; max-width: 440px; line-height: 1.9; margin-bottom: 2.8rem;
+    }
+    #mailbox { background: var(--parchment); }
+    .letter-form {
+      width: 100%; max-width: 540px; background: #fffdf9; border-radius: 3px;
+      padding: 2.5rem; box-shadow: 0 4px 24px rgba(155,123,138,0.1);
+      border: 1px solid rgba(196,116,138,0.15);
+    }
+    .form-field { margin-bottom: 1.4rem; }
+    .form-field label {
+      display: block; font-size: 0.7rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--soft); margin-bottom: 0.5rem;
+    }
+    .form-field input, .form-field textarea {
+      width: 100%; border: none; border-bottom: 1px solid var(--blush);
+      background: transparent; padding: 0.5rem 0;
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 0.93rem; color: var(--text); outline: none;
+      transition: border-color 0.25s; resize: none;
+    }
+    .form-field input:focus, .form-field textarea:focus { border-color: var(--rose); }
+    .form-field textarea { min-height: 140px; }
+    .btn-send {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--rose); color: white; border: none; cursor: pointer;
+      padding: 0.75rem 2rem; font-family: 'Lato', sans-serif; font-size: 0.75rem;
+      letter-spacing: 0.13em; text-transform: uppercase; border-radius: 2px;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-send:hover { background: #a85e74; transform: translateY(-1px); }
+    .sent-msg { display: none; text-align: center; padding: 2rem; }
+    .sent-msg .sent-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .sent-msg p { font-family: 'Playfair Display', serif; font-style: italic; color: var(--soft); line-height: 1.8; }
+    #shelf { background: var(--cream); }
+    .shelf-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.5rem; width: 100%; max-width: 760px;
+    }
+    .shelf-card {
+      background: white; border-radius: 3px; padding: 1.8rem;
+      border: 1px solid rgba(196,116,138,0.12);
+      box-shadow: 0 2px 16px rgba(155,123,138,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .shelf-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(155,123,138,0.14); }
+    .card-type { font-size: 0.63rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.8rem; }
+    .card-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--mauve); margin-bottom: 0.25rem; }
+    .card-author { font-size: 0.75rem; color: var(--soft); margin-bottom: 1rem; }
+    .card-note { font-size: 0.8rem; color: var(--text); line-height: 1.75; font-style: italic; border-left: 2px solid var(--blush); padding-left: 0.8rem; }
+    #music { background: var(--parchment); }
+    .music-list { width: 100%; max-width: 540px; display: flex; flex-direction: column; gap: 1rem; }
+    .music-item {
+      display: flex; align-items: center; gap: 1.2rem;
+      background: white; padding: 1.1rem 1.4rem; border-radius: 3px;
+      border: 1px solid rgba(196,116,138,0.12); transition: transform 0.2s;
+    }
+    .music-item:hover { transform: translateX(4px); }
+    .music-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--blush); min-width: 2rem; }
+    .music-info { flex: 1; }
+    .music-track { font-size: 0.88rem; color: var(--text); margin-bottom: 0.2rem; }
+    .music-artist { font-size: 0.73rem; color: var(--soft); }
+    .music-for { font-size: 0.65rem; color: var(--rose); letter-spacing: 0.08em; text-transform: uppercase; }
+    #about { background: var(--cream); text-align: center; }
+    .about-inner { max-width: 480px; }
+    .about-inner p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.93rem; line-height: 2.1; color: var(--text); margin-bottom: 1.5rem; }
+    .about-handle { font-family: 'Satisfy', cursive; font-size: 1.5rem; color: var(--rose); }
+    .about-links { margin-top: 1.5rem; display: flex; gap: 1.5rem; justify-content: center; }
+    .about-links a { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--soft); text-decoration: none; transition: color 0.2s; }
+    .about-links a:hover { color: var(--rose); }
+    footer {
+      background: var(--parchment); text-align: center;
+      padding: 2rem; font-size: 0.7rem; color: var(--soft);
+      letter-spacing: 0.08em; border-top: 1px solid rgba(196,116,138,0.15);
+    }
+    footer span { color: var(--rose); }
+    @media (max-width: 600px) {
+      nav { gap: 1.2rem; font-size: 0.68rem; }
+      .nav-brand { font-size: 0.95rem; }
+      section { padding: 6rem 1.2rem 4rem; }
+      .env-svg-wrap { width: 260px; height: 195px; }
+      .peek-letter { width: 210px; }
+      .letter-paper { padding: 2.2rem 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#home" class="nav-brand">letters to lizzie</a>
+  <a href="#mailbox">write</a>
+  <a href="#shelf">the shelf</a>
+  <a href="#music">music</a>
+  <a href="#about">about</a>
+</nav>
+
+<section id="home">
+  <div class="envelope-scene">
+    <div class="scene-title">A Letter To Liz!</div>
+    <div class="env-closed" id="envClosed">
+      <div class="env-svg-wrap">
+        <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" width="320" height="240">
+          <rect x="10" y="80" width="300" height="150" rx="4" fill="#f0ebe0" stroke="rgba(196,116,138,0.25)" stroke-width="1"/>
+          <polygon points="10,80 160,170 310,80" fill="#e8e2d0" stroke="rgba(196,116,138,0.2)" stroke-width="1"/>
+          <polygon points="10,80 10,230 130,160" fill="#e4ddc8" stroke="rgba(196,116,138,0.15)" stroke-width="0.5"/>
+          <polygon points="310,80 310,230 190,160" fill="#e4ddc8" stroke="rgba(196,116,138,0.15)" stroke-width="0.5"/>
+          <polygon points="10,230 310,230 160,155" fill="#ede7d5" stroke="rgba(196,116,138,0.15)" stroke-width="0.5"/>
+          <g opacity="0.4" stroke="#c8bfaa" stroke-width="1.2" fill="none">
+            <path d="M140,100 Q160,82 180,100 Q160,122 140,100Z"/>
+            <line x1="160" y1="100" x2="160" y2="120"/>
+            <path d="M122,112 Q142,94 162,112 Q142,134 122,112Z"/>
+            <line x1="142" y1="112" x2="142" y2="132"/>
+            <path d="M158,112 Q178,94 198,112 Q178,134 158,112Z"/>
+            <line x1="178" y1="112" x2="178" y2="132"/>
+          </g>
+          <circle cx="160" cy="168" r="22" fill="#c8899e" opacity="0.85"/>
+          <circle cx="160" cy="168" r="19" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+          <text x="160" y="174" font-family="Georgia,serif" font-style="italic" font-size="18" fill="rgba(255,255,255,0.9)" text-anchor="middle">L</text>
+        </svg>
+      </div>
+      <span class="env-hint">(click to open)</span>
+    </div>
+
+    <div class="env-open" id="envOpen">
+      <div class="peek-letter" id="peekLetter">
+        <div class="peek-border">
+          <svg viewBox="0 0 220 18" width="100%" style="display:block;margin-bottom:6px;" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="9" x2="70" y2="9" stroke="#c4748a" stroke-width="0.7" opacity="0.5"/>
+            <path d="M80,9 Q90,2 100,9 Q110,16 120,9 Q130,2 140,9" stroke="#c4748a" stroke-width="0.8" fill="none" opacity="0.6"/>
+            <line x1="150" y1="9" x2="220" y2="9" stroke="#c4748a" stroke-width="0.7" opacity="0.5"/>
+            <circle cx="10" cy="9" r="2" fill="#c4748a" opacity="0.4"/>
+            <circle cx="210" cy="9" r="2" fill="#c4748a" opacity="0.4"/>
+          </svg>
+          <div class="peek-welcome">Welcome!</div>
+          <div class="peek-text">This is a small community inspired by Lizzie Young and her journey of healing, learning, surviving, and living.</div>
+          <svg viewBox="0 0 220 18" width="100%" style="display:block;margin-top:6px;" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="9" x2="70" y2="9" stroke="#c4748a" stroke-width="0.7" opacity="0.5"/>
+            <path d="M80,9 Q90,2 100,9 Q110,16 120,9 Q130,2 140,9" stroke="#c4748a" stroke-width="0.8" fill="none" opacity="0.6"/>
+            <line x1="150" y1="9" x2="220" y2="9" stroke="#c4748a" stroke-width="0.7" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+      <svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" width="320" height="200" style="position:relative;z-index:3;">
+        <rect x="10" y="30" width="300" height="160" rx="4" fill="#f0ebe0" stroke="rgba(196,116,138,0.25)" stroke-width="1"/>
+        <polygon points="10,30 160,120 310,30" fill="#e8e2d0" stroke="rgba(196,116,138,0.2)" stroke-width="1"/>
+        <polygon points="10,30 310,30 160,-50" fill="#ede7d5" stroke="rgba(196,116,138,0.18)" stroke-width="1"/>
+        <polygon points="10,30 10,190 120,120" fill="#e4ddc8" stroke="rgba(196,116,138,0.15)" stroke-width="0.5"/>
+        <polygon points="310,30 310,190 200,120" fill="#e4ddc8" stroke="rgba(196,116,138,0.15)" stroke-width="0.5"/>
+        <g opacity="0.3" stroke="#c8bfaa" stroke-width="1" fill="none">
+          <path d="M148,10 Q160,2 172,10 Q160,22 148,10Z"/>
+          <line x1="160" y1="10" x2="160" y2="22"/>
+        </g>
+        <path d="M10,190 Q20,198 30,190 Q40,198 50,190 Q60,198 70,190 Q80,198 90,190 Q100,198 110,190 Q120,198 130,190 Q140,198 150,190 Q160,198 170,190 Q180,198 190,190 Q200,198 210,190 Q220,198 230,190 Q240,198 250,190 Q260,198 270,190 Q280,198 290,190 Q300,198 310,190" stroke="rgba(196,116,138,0.35)" stroke-width="1.2" fill="none"/>
+      </svg>
+      <span class="env-hint" style="margin-top:0.3rem;">(click letter to read)</span>
+    </div>
+  </div>
+</section>
+
+<div class="letter-modal" id="letterModal">
+  <div class="letter-paper">
+    <svg class="letter-ornate-border" viewBox="0 0 460 560" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <rect x="4" y="4" width="452" height="552" rx="2" fill="none" stroke="#c4748a" stroke-width="0.8" opacity="0.4"/>
+      <rect x="14" y="14" width="432" height="532" rx="1" fill="none" stroke="#c4748a" stroke-width="0.5" opacity="0.3"/>
+      <g opacity="0.55" stroke="#c4748a" fill="none">
+        <path d="M200,14 Q230,4 260,14" stroke-width="0.8"/>
+        <circle cx="230" cy="8" r="3" fill="#c4748a" opacity="0.4"/>
+        <path d="M215,8 Q222,2 230,8 Q238,2 245,8" stroke-width="0.7"/>
+      </g>
+      <g opacity="0.5" stroke="#c4748a" fill="none" transform="translate(14,14)">
+        <path d="M0,30 Q0,0 30,0" stroke-width="0.8"/>
+        <circle cx="8" cy="8" r="2" fill="#c4748a" opacity="0.5"/>
+        <path d="M16,4 Q20,0 28,4" stroke-width="0.6"/>
+        <line x1="4" y1="16" x2="4" y2="28" stroke-width="0.6" opacity="0.4"/>
+      </g>
+      <g opacity="0.5" stroke="#c4748a" fill="none" transform="translate(446,14) scale(-1,1)">
+        <path d="M0,30 Q0,0 30,0" stroke-width="0.8"/>
+        <circle cx="8" cy="8" r="2" fill="#c4748a" opacity="0.5"/>
+        <path d="M16,4 Q20,0 28,4" stroke-width="0.6"/>
+        <line x1="4" y1="16" x2="4" y2="28" stroke-width="0.6" opacity="0.4"/>
+      </g>
+      <g opacity="0.5" stroke="#c4748a" fill="none" transform="translate(14,546) scale(1,-1)">
+        <path d="M0,30 Q0,0 30,0" stroke-width="0.8"/>
+        <circle cx="8" cy="8" r="2" fill="#c4748a" opacity="0.5"/>
+        <line x1="4" y1="16" x2="4" y2="28" stroke-width="0.6" opacity="0.4"/>
+      </g>
+      <g opacity="0.5" stroke="#c4748a" fill="none" transform="translate(446,546) scale(-1,-1)">
+        <path d="M0,30 Q0,0 30,0" stroke-width="0.8"/>
+        <circle cx="8" cy="8" r="2" fill="#c4748a" opacity="0.5"/>
+        <line x1="4" y1="16" x2="4" y2="28" stroke-width="0.6" opacity="0.4"/>
+      </g>
+      <g opacity="0.3" stroke="#c4748a" fill="none">
+        <path d="M14,240 Q8,260 14,280" stroke-width="0.8"/>
+        <circle cx="7" cy="260" r="2.5" fill="#c4748a" opacity="0.4"/>
+        <path d="M446,240 Q452,260 446,280" stroke-width="0.8"/>
+        <circle cx="453" cy="260" r="2.5" fill="#c4748a" opacity="0.4"/>
+      </g>
+    </svg>
+    <button class="letter-close" id="letterClose">✕</button>
+    <div class="letter-welcome-head">Welcome!</div>
+    <div class="letter-body-text">
+      <p>This is a small community inspired by Lizzie Young and her journey of healing, learning, surviving, and living.</p>
+      <p>Here, we'll celebrate her grief and her rage, as well as her gentleness and strength, because maybe in loving her so loudly, we're learning to love those same parts of ourselves.</p>
+      <p>Whether you're here to write a letter, share an edit, or just read quietly from the sidelines—you belong here.</p>
+      <p>More soon!</p>
+    </div>
+    <div class="letter-sign">With Love,<br><br>
+      <span style="font-family:'Satisfy',cursive;font-size:1.3rem;color:var(--rose);">@letterstolizzie</span>
+    </div>
+  </div>
+</div>
+
+<section id="mailbox">
+  <p class="section-eyebrow">write to her</p>
+  <h2 class="section-title">the mailbox</h2>
+  <p class="section-desc">she might not be able to read them, but we will. leave lizzie a letter — anything you'd want to say.</p>
+  <div class="divider"></div>
+  <div class="letter-form" id="letterForm">
+    <div class="form-field">
+      <label>your name (or stay anonymous)</label>
+      <input type="text" placeholder="a liz lover..." />
+    </div>
+    <div class="form-field">
+      <label>dear lizzie,</label>
+      <textarea placeholder="write anything you'd want her to know..."></textarea>
+    </div>
+    <div class="form-field">
+      <label>a song you'd send with this</label>
+      <input type="text" placeholder="optional — what's playing while you write?" />
+    </div>
+    <button class="btn-send" id="sendBtn">✉ send your letter</button>
+  </div>
+  <div class="sent-msg" id="sentMsg">
+    <div class="sent-icon">🌿</div>
+    <p>your letter has been tucked away safely.<br>lizzie would've loved it.</p>
+  </div>
+</section>
+
+<section id="shelf">
+  <p class="section-eyebrow">reading corner</p>
+  <h2 class="section-title">lizzie's bookshelf</h2>
+  <p class="section-desc">books, poems, and stories that feel like her — curated weekly. add your own picks in the comments.</p>
+  <div class="divider"></div>
+  <div class="shelf-grid">
+    <div class="shelf-card">
+      <div class="card-type">📖 this week's pick</div>
+      <div class="card-title">Normal People</div>
+      <div class="card-author">Sally Rooney</div>
+      <div class="card-note">"because loving someone quietly from a distance while falling apart — that's very lizzie."</div>
+    </div>
+    <div class="shelf-card">
+      <div class="card-type">📖 for her grief</div>
+      <div class="card-title">The Year of Magical Thinking</div>
+      <div class="card-author">Joan Didion</div>
+      <div class="card-note">"grief that doesn't ask permission to stay. she would underline every page."</div>
+    </div>
+    <div class="shelf-card">
+      <div class="card-type">📖 for her softness</div>
+      <div class="card-title">milk and honey</div>
+      <div class="card-author">Rupi Kaur</div>
+      <div class="card-note">"short, sharp, tender. the kind of words lizzie keeps folded in her pocket."</div>
+    </div>
+  </div>
+</section>
+
+<section id="music">
+  <p class="section-eyebrow">listening corner</p>
+  <h2 class="section-title">lizzie's playlist</h2>
+  <p class="section-desc">songs that live in her world. suggest your own in the comments every friday.</p>
+  <div class="divider"></div>
+  <div class="music-list">
+    <div class="music-item">
+      <div class="music-num">01</div>
+      <div class="music-info"><div class="music-track">Motion Sickness</div><div class="music-artist">Phoebe Bridgers</div></div>
+      <div class="music-for">for her rage</div>
+    </div>
+    <div class="music-item">
+      <div class="music-num">02</div>
+      <div class="music-info"><div class="music-track">Sofia</div><div class="music-artist">Clairo</div></div>
+      <div class="music-for">for her softness</div>
+    </div>
+    <div class="music-item">
+      <div class="music-num">03</div>
+      <div class="music-info"><div class="music-track">Supercut</div><div class="music-artist">Lorde</div></div>
+      <div class="music-for">for her memories</div>
+    </div>
+    <div class="music-item">
+      <div class="music-num">04</div>
+      <div class="music-info"><div class="music-track">Ivy</div><div class="music-artist">Taylor Swift</div></div>
+      <div class="music-for">for her love</div>
+    </div>
+    <div class="music-item">
+      <div class="music-num">05</div>
+      <div class="music-info"><div class="music-track">White Flag</div><div class="music-artist">Joseph</div></div>
+      <div class="music-for">for her resilience</div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-inner">
+    <p class="section-eyebrow">about this space</p>
+    <h2 class="section-title" style="margin-bottom:2rem;">who we are 🌿</h2>
+    <p>a community for anyone who has ever seen a piece of themselves in lizzie young. we're here to celebrate her fully — her grief, her softness, her rage, her stubborn hope.</p>
+    <p>we curate books and music that feel like her world. we write her letters. we hold space for the parts of her that feel the most like us.</p>
+    <div class="about-handle">@letterstolizzie</div>
+    <div class="about-links">
+      <a href="#">twitter / x</a>
+      <a href="#">submit a letter</a>
+      <a href="#">suggest a book</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  made with 🤍 for lizzie young &nbsp;·&nbsp; <span>#letterstolizzie</span>
+</footer>
+
+<script>
+  const colors = ['#e8c4c4','#d4c4d4','#c4d4c4','#f0d4c4'];
+  for (let i = 0; i < 16; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${9+Math.random()*12}s;animation-delay:${Math.random()*10}s;transform:rotate(${Math.random()*360}deg);width:${6+Math.random()*5}px;height:${9+Math.random()*7}px;`;
+    document.getElementById('home').appendChild(p);
+  }
+  const envClosed = document.getElementById('envClosed');
+  const envOpen = document.getElementById('envOpen');
+  const peekLetter = document.getElementById('peekLetter');
+  const modal = document.getElementById('letterModal');
+  const closeBtn = document.getElementById('letterClose');
+  envClosed.addEventListener('click', () => {
+    envClosed.style.display = 'none';
+    envOpen.style.display = 'flex';
+  });
+  peekLetter.addEventListener('click', (e) => {
+    e.stopPropagation();
+    modal.classList.add('show');
+  });
+  closeBtn.addEventListener('click', () => modal.classList.remove('show'));
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('show'); });
+  document.getElementById('sendBtn').addEventListener('click', () => {
+    document.getElementById('letterForm').style.display = 'none';
+    document.getElementById('sentMsg').style.display = 'block';
+  });
+</script>
+</body>
+</html>
