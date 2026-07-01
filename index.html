@@ -93,8 +93,8 @@
     /* the 3-layer stack */
     .env-stack {
       position: relative;
-      width: 320px;
-      height: 420px;
+      width: 400px;
+      height: 504 px;
       cursor: pointer;
     }
 
@@ -104,7 +104,7 @@
     .env-stack .layer-flap {
       position: absolute;
       bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 320px;
+      width: 400px;
       z-index: 1;
       pointer-events: none;
     }
@@ -113,7 +113,7 @@
     .env-stack .layer-letter {
       position: absolute;
       bottom: 20px; left: 50%; transform: translateX(-50%);
-      width: 270px;
+      width: 308px;
       z-index: 2;
       transition: bottom 0.7s cubic-bezier(0.4,0,0.2,1);
       filter: drop-shadow(0 4px 12px rgba(155,123,138,0.15));
@@ -126,7 +126,7 @@
     .env-stack .layer-body {
       position: absolute;
       bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 320px;
+      width: 400px;
       z-index: 3;
       pointer-events: none;
     }
@@ -330,7 +330,7 @@
     <div class="scene-title">A Letter To Liz!</div>
 
     <div class="env-closed" id="envClosed">
-      <img src="envelope-closed.png" alt="A closed envelope with a wax seal" style="width:320px;filter:drop-shadow(0 8px 24px rgba(155,123,138,0.2));transition:transform 0.3s;" />
+      <img src="envelope-closed.png" alt="A closed envelope with a wax seal" style="width:400px;filter:drop-shadow(0 8px 24px rgba(155,123,138,0.2));transition:transform 0.3s;" />
       <span class="env-hint">(click to open)</span>
     </div>
 
