@@ -44,7 +44,7 @@
       min-height: 100vh; padding: 7rem 2rem 5rem;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
-    #home { background: var(--cream); position: relative; overflow: visible; padding: 6rem 2rem 2rem; justify-content: flex-start; }
+    #home { background: var(--cream); position: relative; overflow: visible; padding: 5rem 2rem 2rem; justify-content: flex-start; align-items: center; }
     .petal {
       position: absolute; border-radius: 50% 0 50% 0;
       opacity: 0; animation: floatPetal linear infinite; pointer-events: none;
@@ -67,7 +67,7 @@
       font-family: 'Satisfy', cursive;
       font-size: clamp(2.2rem, 5vw, 3.5rem);
       color: var(--rose);
-      margin-bottom: -10px;
+      margin-bottom: 0.8rem;
       text-align: center;
     }
 
@@ -76,7 +76,7 @@
       cursor: pointer;
       display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
       transition: transform 0.3s;
-      margin-top: -1.5rem;
+      margin-top: 0;
     }
     .env-closed:hover { transform: translateY(-4px); }
     .env-closed img { width: 380px; filter: drop-shadow(0 8px 24px rgba(155,123,138,0.2)); transition: transform 0.3s; }
@@ -85,7 +85,7 @@
     .env-open {
       display: none;
       flex-direction: column; align-items: center; gap: 0.6rem;
-      margin-top: -1.5rem;
+      margin-top: 0;
     }
 
     /* 3-layer stack */
