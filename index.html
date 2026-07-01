@@ -78,7 +78,7 @@
       transition: transform 0.3s;
     }
     .env-closed:hover { transform: translateY(-4px); }
-    .env-closed img { width: 460px; filter: drop-shadow(0 8px 24px rgba(155,123,138,0.2)); transition: transform 0.3s; }
+    .env-closed img { width: 600px; filter: drop-shadow(0 8px 24px rgba(155,123,138,0.2)); transition: transform 0.3s; }
 
     /* STATE 1: layered open envelope */
     .env-open {
@@ -89,8 +89,8 @@
     /* 3-layer stack */
     .env-stack {
       position: relative;
-      width: 460px;
-      height: 580px;
+      width: 600px;
+      height: 756px;
       cursor: pointer;
       margin: 0 auto;
     }
@@ -98,14 +98,14 @@
     .env-stack .layer-flap {
       position: absolute;
       bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 460px;
+      width: 600px;
       z-index: 1;
       pointer-events: none;
     }
     .env-stack .layer-letter {
       position: absolute;
       bottom: 20px; left: 50%; transform: translateX(-50%);
-      width: 355px;
+      width: 462px;
       z-index: 2;
       transition: bottom 0.7s cubic-bezier(0.4,0,0.2,1);
       filter: drop-shadow(0 4px 12px rgba(155,123,138,0.15));
@@ -116,7 +116,7 @@
     .env-stack .layer-body {
       position: absolute;
       bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 460px;
+      width: 600px;
       z-index: 3;
       pointer-events: none;
     }
