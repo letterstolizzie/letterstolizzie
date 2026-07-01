@@ -76,9 +76,10 @@
       cursor: pointer;
       display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
       transition: transform 0.3s;
+      margin-top: 2rem;
     }
     .env-closed:hover { transform: translateY(-4px); }
-    .env-closed img { width: 500px; filter: drop-shadow(0 8px 24px rgba(155,123,138,0.2)); transition: transform 0.3s; }
+    .env-closed img { width: 380px; filter: drop-shadow(0 8px 24px rgba(155,123,138,0.2)); transition: transform 0.3s; }
 
     /* STATE 1: layered open envelope */
     .env-open {
@@ -90,9 +91,9 @@
     .env-stack {
       position: relative;
       width: 380px;
-      height: 300px;
+      height: 420px;
       cursor: pointer;
-      margin: 0 auto;
+      margin: 2rem auto 0;
     }
 
     .env-stack .layer-flap {
