@@ -67,30 +67,30 @@
       font-family: 'Satisfy', cursive;
       font-size: clamp(2.2rem, 5vw, 3.5rem);
       color: var(--rose);
-      margin-bottom: 1rem;
+      margin-bottom: 0.3rem;
       text-align: center;
     }
 
     /* STATE 0: closed envelope */
     .env-closed {
       cursor: pointer;
-      display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
       transition: transform 0.3s;
     }
     .env-closed:hover { transform: translateY(-4px); }
-    .env-closed img { width: 600px; filter: drop-shadow(0 8px 24px rgba(155,123,138,0.2)); transition: transform 0.3s; }
+    .env-closed img { width: 500px; filter: drop-shadow(0 8px 24px rgba(155,123,138,0.2)); transition: transform 0.3s; }
 
     /* STATE 1: layered open envelope */
     .env-open {
       display: none;
-      flex-direction: column; align-items: center; gap: 0.8rem;
+      flex-direction: column; align-items: center; gap: 0.6rem;
     }
 
     /* 3-layer stack */
     .env-stack {
       position: relative;
-      width: 600px;
-      height: 480px;
+      width: 500px;
+      height: 400px;
       cursor: pointer;
       margin: 0 auto;
     }
@@ -98,14 +98,14 @@
     .env-stack .layer-flap {
       position: absolute;
       bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 600px;
+      width: 500px;
       z-index: 1;
       pointer-events: none;
     }
     .env-stack .layer-letter {
       position: absolute;
       bottom: 20px; left: 50%; transform: translateX(-50%);
-      width: 462px;
+      width: 385px;
       z-index: 2;
       transition: bottom 0.7s cubic-bezier(0.4,0,0.2,1);
       filter: drop-shadow(0 4px 12px rgba(155,123,138,0.15));
@@ -116,7 +116,7 @@
     .env-stack .layer-body {
       position: absolute;
       bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 600px;
+      width: 500px;
       z-index: 3;
       pointer-events: none;
     }
