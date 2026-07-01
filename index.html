@@ -16,14 +16,43 @@
 
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: center; gap: 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 1.2rem 2rem; background: rgba(250,246,240,0.93);
       backdrop-filter: blur(6px); border-bottom: 1px solid rgba(196,116,138,0.15);
-      font-size: 0.75rem; letter-spacing: 0.13em; text-transform: uppercase;
     }
-    nav a { color: var(--soft); text-decoration: none; transition: color 0.25s; }
-    nav a:hover { color: var(--rose); }
-    .nav-brand { font-family: 'Satisfy', cursive; font-size: 1.15rem; text-transform: none; letter-spacing: 0; color: var(--rose) !important; }
+    .nav-brand { font-family: 'Satisfy', cursive; font-size: 1.15rem; text-transform: none; letter-spacing: 0; color: var(--rose) !important; text-decoration: none; }
+
+    /* dropdown */
+    .nav-menu { position: relative; }
+    .nav-toggle {
+      background: none; border: none; cursor: pointer;
+      display: flex; flex-direction: column; gap: 5px; padding: 4px;
+    }
+    .nav-toggle span {
+      display: block; width: 22px; height: 1.5px;
+      background: var(--soft); transition: background 0.2s;
+    }
+    .nav-toggle:hover span { background: var(--rose); }
+
+    .nav-dropdown {
+      display: none;
+      position: absolute; top: 2.2rem; right: 0;
+      background: rgba(250,246,240,0.98);
+      border: 1px solid rgba(196,116,138,0.15);
+      border-radius: 4px;
+      box-shadow: 0 8px 24px rgba(155,123,138,0.12);
+      min-width: 140px;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .nav-dropdown.open { display: flex; }
+    .nav-dropdown a {
+      color: var(--soft); text-decoration: none;
+      font-size: 0.75rem; letter-spacing: 0.13em; text-transform: uppercase;
+      padding: 0.9rem 1.4rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-dropdown a:hover { background: rgba(196,116,138,0.08); color: var(--rose); }
 
     section { min-height: 100vh; padding: 7rem 2rem 5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     #home { background: var(--cream); position: relative; overflow: hidden; }
@@ -177,10 +206,17 @@
 
 <nav>
   <a href="#home" class="nav-brand">letters to lizzie</a>
-  <a href="#mailbox">write</a>
-  <a href="#shelf">the shelf</a>
-  <a href="#music">music</a>
-  <a href="#about">about</a>
+  <div class="nav-menu">
+    <button class="nav-toggle" id="navToggle">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-dropdown" id="navDropdown">
+      <a href="#mailbox">write</a>
+      <a href="#shelf">the shelf</a>
+      <a href="#music">music</a>
+      <a href="#about">about</a>
+    </div>
+  </div>
 </nav>
 
 <section id="home">
@@ -269,6 +305,15 @@
 <footer>made with 🤍 for lizzie young &nbsp;·&nbsp; <span>#letterstolizzie</span></footer>
 
 <script>
+  const navToggle = document.getElementById('navToggle');
+  const navDropdown = document.getElementById('navDropdown');
+  navToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navDropdown.classList.toggle('open');
+  });
+  document.addEventListener('click', () => navDropdown.classList.remove('open'));
+  navDropdown.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navDropdown.classList.remove('open')));
+
   const colors = ['#e8c4c4','#d4c4d4','#c4d4c4','#f0d4c4'];
   for (let i = 0; i < 16; i++) {
     const p = document.createElement('div');
