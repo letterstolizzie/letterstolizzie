@@ -67,7 +67,7 @@
       font-family: 'Satisfy', cursive;
       font-size: clamp(2.2rem, 5vw, 3.5rem);
       color: var(--rose);
-      margin-bottom: 0.3rem;
+      margin-bottom: -10px;
       text-align: center;
     }
 
@@ -76,7 +76,7 @@
       cursor: pointer;
       display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
       transition: transform 0.3s;
-      margin-top: 2rem;
+      margin-top: 0.5rem;
     }
     .env-closed:hover { transform: translateY(-4px); }
     .env-closed img { width: 380px; filter: drop-shadow(0 8px 24px rgba(155,123,138,0.2)); transition: transform 0.3s; }
@@ -85,6 +85,7 @@
     .env-open {
       display: none;
       flex-direction: column; align-items: center; gap: 0.6rem;
+      margin-top: 0.5rem;
     }
 
     /* 3-layer stack */
@@ -93,7 +94,7 @@
       width: 380px;
       height: 420px;
       cursor: pointer;
-      margin: 2rem auto 0;
+      margin: 0 auto;
     }
 
     .env-stack .layer-flap {
