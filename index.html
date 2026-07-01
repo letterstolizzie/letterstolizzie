@@ -60,12 +60,7 @@
     section { min-height: 100vh; padding: 7rem 2rem 5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     #home { background: var(--cream); position: relative; overflow: hidden; }
 
-    .petal { position: absolute; border-radius: 50% 0 50% 0; opacity: 0; animation: floatPetal linear infinite; pointer-events: none; }
-    @keyframes floatPetal {
-      0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
-      10% { opacity: 0.45; } 90% { opacity: 0.25; }
-      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-    }
+    .petal { display: none; }
 
     /* ENVELOPE SCENE — simple flex column, no tricks */
     .envelope-scene {
@@ -165,14 +160,82 @@
     .sent-msg .sent-icon { font-size: 2rem; margin-bottom: 1rem; }
     .sent-msg p { font-family: 'Playfair Display', serif; font-style: italic; color: var(--soft); line-height: 1.8; }
 
-    #shelf { background: var(--cream); }
-    .shelf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.5rem; width: 100%; max-width: 760px; }
-    .shelf-card { background: white; border-radius: 3px; padding: 1.8rem; border: 1px solid rgba(196,116,138,0.12); box-shadow: 0 2px 16px rgba(155,123,138,0.07); transition: transform 0.25s, box-shadow 0.25s; }
-    .shelf-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(155,123,138,0.14); }
-    .card-type { font-size: 0.63rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.8rem; }
-    .card-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--mauve); margin-bottom: 0.25rem; }
-    .card-author { font-size: 0.75rem; color: var(--soft); margin-bottom: 1rem; }
-    .card-note { font-size: 0.8rem; color: var(--text); line-height: 1.75; font-style: italic; border-left: 2px solid var(--blush); padding-left: 0.8rem; }
+    /* BOOK SLIDER */
+    .book-slider { width: 100%; max-width: 700px; }
+    .book-track {
+      display: flex; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+      will-change: transform;
+    }
+    .book-slide {
+      min-width: 100%; display: flex; gap: 3rem; align-items: flex-start;
+      padding: 0 0.5rem;
+    }
+    .book-cover {
+      min-width: 160px; height: 230px; border-radius: 4px 8px 8px 4px;
+      position: relative; overflow: hidden;
+      box-shadow: -4px 4px 12px rgba(90,74,82,0.2), 4px 4px 16px rgba(90,74,82,0.15);
+      flex-shrink: 0;
+    }
+    .book-spine {
+      position: absolute; left: 0; top: 0; bottom: 0; width: 16px;
+      background: rgba(0,0,0,0.12);
+    }
+    .book-cover-text {
+      position: absolute; inset: 0; padding: 1.2rem 1rem 1rem 1.8rem;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .book-cover-title {
+      font-family: 'Playfair Display', serif; font-size: 0.85rem;
+      color: rgba(90,74,82,0.9); font-weight: 500; line-height: 1.3; margin-bottom: 0.3rem;
+    }
+    .book-cover-author { font-size: 0.7rem; color: rgba(90,74,82,0.7); }
+    .book-info { flex: 1; }
+    .book-month {
+      font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--rose); margin-bottom: 0.6rem;
+    }
+    .book-title {
+      font-family: 'Playfair Display', serif; font-size: 1.3rem;
+      color: var(--mauve); margin-bottom: 0.2rem;
+    }
+    .book-author { font-size: 0.8rem; color: var(--soft); margin-bottom: 1rem; }
+    .book-desc {
+      font-size: 0.86rem; color: var(--text); line-height: 1.85;
+      margin-bottom: 1.2rem;
+    }
+    .book-lizzie {
+      border-left: 2px solid var(--blush); padding-left: 1rem;
+    }
+    .lizzie-label {
+      display: block; font-size: 0.65rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--rose); margin-bottom: 0.4rem;
+    }
+    .book-lizzie p { font-size: 0.82rem; color: var(--soft); line-height: 1.8; font-style: italic; }
+
+    .book-dots {
+      display: flex; justify-content: center; gap: 0.6rem; margin-top: 2rem;
+    }
+    .book-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      border: 1.5px solid var(--rose); background: transparent;
+      cursor: pointer; transition: background 0.25s; padding: 0;
+    }
+    .book-dot.active { background: var(--rose); }
+
+    .book-credit {
+      margin-top: 0.8rem;
+      font-size: 0.75rem; color: var(--rose);
+      font-family: 'Satisfy', cursive; font-size: 0.9rem;
+    }
+    .rec-form { display: flex; flex-direction: column; gap: 1rem; }
+    .rec-field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .rec-field label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft); }
+    .rec-field input, .rec-field textarea { border: none; border-bottom: 1px solid var(--blush); background: transparent; padding: 0.4rem 0; font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.9rem; color: var(--text); outline: none; transition: border-color 0.25s; resize: none; }
+    .rec-field input:focus, .rec-field textarea:focus { border-color: var(--rose); }
+    .rec-field textarea { min-height: 80px; }
+    .btn-rec { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--rose); color: white; border: none; cursor: pointer; padding: 0.7rem 1.8rem; font-family: 'Lato', sans-serif; font-size: 0.75rem; letter-spacing: 0.13em; text-transform: uppercase; border-radius: 2px; transition: background 0.25s; margin-top: 0.5rem; }
+    .btn-rec:hover { background: #a85e74; }
+    .rec-sent { display: none; font-family: 'Playfair Display', serif; font-style: italic; color: var(--soft); font-size: 0.9rem; padding: 1rem 0; }
 
     #music { background: var(--parchment); }
     .music-list { width: 100%; max-width: 540px; display: flex; flex-direction: column; gap: 1rem; }
@@ -253,7 +316,7 @@
 
 <section id="mailbox">
   <p class="section-eyebrow">write to her</p>
-  <h2 class="section-title">the mailbox</h2>
+  <h2 class="section-title">Dear Lizzie</h2>
   <p class="section-desc">she might not be able to read them, but we will. leave lizzie a letter — anything you'd want to say.</p>
   <div class="divider"></div>
   <div class="letter-form" id="letterForm">
@@ -269,20 +332,116 @@
 </section>
 
 <section id="shelf">
-  <p class="section-eyebrow">reading corner</p>
-  <h2 class="section-title">lizzie's bookshelf</h2>
-  <p class="section-desc">books, poems, and stories that feel like her — curated weekly.</p>
+  <p class="section-eyebrow">lizzie's bookshelf</p>
+  <h2 class="section-title">Lizzie's Reading Corner</h2>
+  <p class="section-desc">this month's picks, handpicked for liz lovers 📚</p>
   <div class="divider"></div>
-  <div class="shelf-grid">
-    <div class="shelf-card"><div class="card-type">📖 this week's pick</div><div class="card-title">Normal People</div><div class="card-author">Sally Rooney</div><div class="card-note">"because loving someone quietly from a distance while falling apart — that's very lizzie."</div></div>
-    <div class="shelf-card"><div class="card-type">📖 for her grief</div><div class="card-title">The Year of Magical Thinking</div><div class="card-author">Joan Didion</div><div class="card-note">"grief that doesn't ask permission to stay. she would underline every page."</div></div>
-    <div class="shelf-card"><div class="card-type">📖 for her softness</div><div class="card-title">milk and honey</div><div class="card-author">Rupi Kaur</div><div class="card-note">"short, sharp, tender. the kind of words lizzie keeps folded in her pocket."</div></div>
+
+  <div class="book-slider">
+    <div class="book-track" id="bookTrack">
+
+      <!-- Book 1 -->
+      <div class="book-slide">
+        <div class="book-cover" style="background: #e8d5c4;">
+          <div class="book-spine"></div>
+          <div class="book-cover-text">
+            <div class="book-cover-title">Normal People</div>
+            <div class="book-cover-author">Sally Rooney</div>
+          </div>
+        </div>
+        <div class="book-info">
+          <h3 class="book-title">Normal People</h3>
+          <p class="book-author">Sally Rooney</p>
+          <p class="book-desc">Two people who love each other but can never quite get it right. A quiet, devastating study of class, desire, and the terrifying vulnerability of being truly known.</p>
+          <div class="book-lizzie">
+            <span class="lizzie-label">why it feels like lizzie</span>
+            <p>because loving someone quietly from a distance while falling apart — that's very lizzie. she'd read this in one sitting and cry at the parts that feel too specific to be fiction.</p>
+          </div>
+          <div class="book-credit">— @letterstolizzie</div>
+        </div>
+      </div>
+
+      <!-- Book 2 -->
+      <div class="book-slide">
+        <div class="book-cover" style="background: #d4c4d8;">
+          <div class="book-spine"></div>
+          <div class="book-cover-text">
+            <div class="book-cover-title">The Year of Magical Thinking</div>
+            <div class="book-cover-author">Joan Didion</div>
+          </div>
+        </div>
+        <div class="book-info">
+          <h3 class="book-title">The Year of Magical Thinking</h3>
+          <p class="book-author">Joan Didion</p>
+          <p class="book-desc">A memoir about loss so raw it reads like a wound. Didion writes grief not as a phase but as a place you live in, where logic stops working and love refuses to believe what happened.</p>
+          <div class="book-lizzie">
+            <span class="lizzie-label">why it feels like lizzie</span>
+            <p>grief that doesn't ask permission to stay. she would underline every page. she would recognize the way loss rewrites ordinary moments into something unbearable.</p>
+          </div>
+          <div class="book-credit">— @letterstolizzie</div>
+        </div>
+      </div>
+
+      <!-- Book 3 -->
+      <div class="book-slide">
+        <div class="book-cover" style="background: #c4d4c8;">
+          <div class="book-spine"></div>
+          <div class="book-cover-text">
+            <div class="book-cover-title">milk and honey</div>
+            <div class="book-cover-author">Rupi Kaur</div>
+          </div>
+        </div>
+        <div class="book-info">
+          <h3 class="book-title">milk and honey</h3>
+          <p class="book-author">Rupi Kaur</p>
+          <p class="book-desc">Short, sharp, tender poems about surviving. About the body, about love that hurts, about finding sweetness on the other side of pain. Every poem lands like a quiet exhale.</p>
+          <div class="book-lizzie">
+            <span class="lizzie-label">why it feels like lizzie</span>
+            <p>the kind of words lizzie keeps folded in her pocket. she'd read these aloud to herself and not feel so alone in the parts of her that are hard to explain.</p>
+          </div>
+          <div class="book-credit">— @letterstolizzie</div>
+        </div>
+      </div>
+
+      <!-- Book 4: Community Rec -->
+      <div class="book-slide">
+        <div class="book-cover" style="background: #e8c9c9; display:flex; align-items:center; justify-content:center;">
+          <div class="book-spine"></div>
+          <div style="text-align:center; padding: 1rem 1.5rem 1rem 2rem;">
+            <div style="font-size:2rem; margin-bottom:0.5rem;">📖</div>
+            <div style="font-family:'Playfair Display',serif; font-size:0.8rem; color:rgba(90,74,82,0.7); font-style:italic;">your recommendation</div>
+          </div>
+        </div>
+        <div class="book-info">
+          <h3 class="book-title" style="margin-bottom:1rem;">recommend a book 🌿</h3>
+          <p class="book-author" style="margin-bottom:1.2rem;">think lizzie would love it? tell us why.</p>
+          <div class="rec-form">
+            <div class="rec-field"><label>book title & author</label><input type="text" placeholder="e.g. Normal People by Sally Rooney" /></div>
+            <div class="rec-field"><label>why it feels like lizzie</label><textarea placeholder="what about this book reminds you of her?"></textarea></div>
+            <div class="rec-field"><label>your @ (optional — leave blank to stay anonymous)</label><input type="text" placeholder="@yourusername" /></div>
+            <button class="btn-rec" id="recBtn">✉ submit your rec</button>
+          </div>
+          <div class="rec-sent" id="recSent">
+            <p>🌿 your rec has been received. lizzie would approve.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Dot navigation -->
+    <div class="book-dots">
+      <button class="book-dot active" onclick="goToSlide(0)"></button>
+      <button class="book-dot" onclick="goToSlide(1)"></button>
+      <button class="book-dot" onclick="goToSlide(2)"></button>
+      <button class="book-dot" onclick="goToSlide(3)"></button>
+    </div>
   </div>
 </section>
 
 <section id="music">
   <p class="section-eyebrow">listening corner</p>
-  <h2 class="section-title">Lizzie's Playlist</h2>
+  <h2 class="section-title">Lizzie's Mixtape</h2>
   <p class="section-desc">songs that live in her world. suggest your own in the comments every friday.</p>
   <div class="divider"></div>
   <div class="music-list">
@@ -297,7 +456,7 @@
 <section id="about">
   <div class="about-inner">
     <p class="section-eyebrow">about this space</p>
-    <h2 class="section-title" style="margin-bottom:2rem;">who we are 🌿</h2>
+    <h2 class="section-title" style="margin-bottom:2rem;">A Note From Us 🌿</h2>
     <p>a community for anyone who has ever seen a piece of themselves in lizzie young. we're here to celebrate her fully — her grief, her softness, her rage, her stubborn hope.</p>
     <p>we curate books and music that feel like her world. we write her letters. we hold space for the parts of her that feel the most like us.</p>
     <div class="about-handle">@letterstolizzie</div>
@@ -308,6 +467,21 @@
 <footer>made with 🤍 for lizzie young &nbsp;·&nbsp; <span>#letterstolizzie</span></footer>
 
 <script>
+  document.getElementById('recBtn').addEventListener('click', () => {
+    document.querySelector('.rec-form').style.display = 'none';
+    document.getElementById('recSent').style.display = 'block';
+  });
+
+  // Book slider
+  let currentSlide = 0;
+  function goToSlide(n) {
+    currentSlide = n;
+    document.getElementById('bookTrack').style.transform = `translateX(-${n * 100}%)`;
+    document.querySelectorAll('.book-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === n);
+    });
+  }
+
   const navToggle = document.getElementById('navToggle');
   const navDropdown = document.getElementById('navDropdown');
   navToggle.addEventListener('click', (e) => {
@@ -317,13 +491,7 @@
   document.addEventListener('click', () => navDropdown.classList.remove('open'));
   navDropdown.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navDropdown.classList.remove('open')));
 
-  const colors = ['#e8c4c4','#d4c4d4','#c4d4c4','#f0d4c4'];
-  for (let i = 0; i < 16; i++) {
-    const p = document.createElement('div');
-    p.className = 'petal';
-    p.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${9+Math.random()*12}s;animation-delay:${Math.random()*10}s;transform:rotate(${Math.random()*360}deg);width:${6+Math.random()*5}px;height:${9+Math.random()*7}px;`;
-    document.getElementById('home').appendChild(p);
-  }
+  
 
   const envClosed = document.getElementById('envClosed');
   const envOpen   = document.getElementById('envOpen');
