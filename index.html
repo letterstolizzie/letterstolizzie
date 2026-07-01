@@ -44,7 +44,7 @@
       min-height: 100vh; padding: 7rem 2rem 5rem;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
-    #home { background: var(--cream); position: relative; overflow: hidden; padding: 5rem 2rem 2rem; }
+    #home { background: var(--cream); position: relative; overflow: visible; padding: 4.5rem 2rem 1rem; }
     .petal {
       position: absolute; border-radius: 50% 0 50% 0;
       opacity: 0; animation: floatPetal linear infinite; pointer-events: none;
@@ -89,8 +89,8 @@
     /* 3-layer stack */
     .env-stack {
       position: relative;
-      width: 500px;
-      height: 400px;
+      width: 400px;
+      height: 350px;
       cursor: pointer;
       margin: 0 auto;
     }
@@ -431,15 +431,13 @@
     envClosed.style.display = 'none';
     envOpen.style.display = 'flex';
     document.querySelector('.scene-title').style.display = 'none';
+    // automatically pull letter up
+    setTimeout(() => envStack.classList.add('pulled'), 100);
+    envHint.textContent = '(click to read)';
   });
 
   envStack.addEventListener('click', () => {
-    if (!envStack.classList.contains('pulled')) {
-      envStack.classList.add('pulled');
-      envHint.textContent = '(click letter to read)';
-    } else {
-      modal.classList.add('show');
-    }
+    modal.classList.add('show');
   });
 
   closeBtn.addEventListener('click', () => modal.classList.remove('show'));
