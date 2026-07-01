@@ -71,21 +71,29 @@
       text-align: center;
     }
 
+    /* wrapper locks both states to same size and position */
+    .env-wrapper {
+      position: relative;
+      width: 380px;
+      height: 480px;
+      margin-top: -80px;
+    }
+
     /* STATE 0: closed envelope */
     .env-closed {
+      position: absolute; top: 0; left: 0; width: 100%;
       cursor: pointer;
       display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
       transition: transform 0.3s;
-      margin-top: -80px;
     }
     .env-closed:hover { transform: translateY(-4px); }
     .env-closed img { width: 380px; filter: drop-shadow(0 8px 24px rgba(155,123,138,0.2)); transition: transform 0.3s; }
 
     /* STATE 1: layered open envelope */
     .env-open {
+      position: absolute; top: 0; left: 0; width: 100%;
       display: none;
       flex-direction: column; align-items: center; gap: 0.6rem;
-      margin-top: -80px;
     }
 
     /* 3-layer stack */
@@ -284,18 +292,20 @@
   <div class="envelope-scene">
     <div class="scene-title">A Letter To Liz!</div>
 
-    <div class="env-closed" id="envClosed">
-      <img src="envelope-closed.png" alt="A closed envelope with a wax seal" />
-      <span class="env-hint">(click to open)</span>
-    </div>
-
-    <div class="env-open" id="envOpen">
-      <div class="env-stack" id="envStack">
-        <img class="layer-flap" src="envelope-open.png" alt="" />
-        <img class="layer-letter" id="layerLetter" src="letter-paper.png" alt="Welcome letter" />
-        <img class="layer-body" src="envelope-body.png" alt="" />
+    <div class="env-wrapper">
+      <div class="env-closed" id="envClosed">
+        <img src="envelope-closed.png" alt="A closed envelope with a wax seal" />
+        <span class="env-hint">(click to open)</span>
       </div>
-      <span class="env-hint" id="envHint">(click to pull out letter)</span>
+
+      <div class="env-open" id="envOpen">
+        <div class="env-stack" id="envStack">
+          <img class="layer-flap" src="envelope-open.png" alt="" />
+          <img class="layer-letter" id="layerLetter" src="letter-paper.png" alt="Welcome letter" />
+          <img class="layer-body" src="envelope-body.png" alt="" />
+        </div>
+        <span class="env-hint" id="envHint">(click to read)</span>
+      </div>
     </div>
   </div>
 </section>
