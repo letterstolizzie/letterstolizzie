@@ -67,14 +67,14 @@
       font-family: 'Satisfy', cursive;
       font-size: clamp(2.2rem, 5vw, 3.5rem);
       color: var(--rose);
-      margin-bottom: 2.5rem;
+      margin-bottom: 1rem;
       text-align: center;
     }
 
     /* STATE 0: closed envelope */
     .env-closed {
       cursor: pointer;
-      display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+      display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
       transition: transform 0.3s;
     }
     .env-closed:hover { transform: translateY(-4px); }
@@ -83,14 +83,14 @@
     /* STATE 1: layered open envelope */
     .env-open {
       display: none;
-      flex-direction: column; align-items: center; gap: 1.2rem;
+      flex-direction: column; align-items: center; gap: 0.8rem;
     }
 
     /* 3-layer stack */
     .env-stack {
       position: relative;
       width: 600px;
-      height: 756px;
+      height: 480px;
       cursor: pointer;
       margin: 0 auto;
     }
