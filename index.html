@@ -50,16 +50,23 @@
     .env-closed {
       cursor: pointer;
       display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-      transition: transform 0.3s;
+      transition: opacity 0.5s ease, transform 0.3s;
       min-height: 480px; justify-content: flex-start;
     }
     .env-closed:hover { transform: translateY(-4px); }
     .env-closed img { width: 380px; filter: drop-shadow(0 8px 24px rgba(155,123,138,0.2)); }
 
     .env-open {
-      display: none;
+      display: flex;
       flex-direction: column; align-items: center; gap: 0.5rem;
       min-height: 480px; justify-content: flex-start;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .env-open.visible {
+      opacity: 1;
+      pointer-events: all;
     }
 
     /* 3-layer stack */
@@ -279,9 +286,13 @@
   const title     = document.getElementById('sceneTitle');
 
   envClosed.addEventListener('click', () => {
-    envClosed.style.display = 'none';
-    envOpen.style.display = 'flex';
-    setTimeout(() => envStack.classList.add('pulled'), 100);
+    envClosed.style.opacity = '0';
+    envClosed.style.pointerEvents = 'none';
+    envOpen.classList.add('visible');
+    setTimeout(() => {
+      envClosed.style.display = 'none';
+      envStack.classList.add('pulled');
+    }, 500);
   });
 
   envStack.addEventListener('click', () => modal.classList.add('show'));
