@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>letters to lizzie</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Lato:wght@300;400&family=Satisfy&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Griffy&family=Henny+Penny&family=Miss+Fajardose&family=Mountains+of+Christmas:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Lato:wght@300;400&family=Satisfy&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -17,10 +17,15 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1.2rem 2rem; background: rgba(250,246,240,0.93);
-      backdrop-filter: blur(6px); border-bottom: 1px solid rgba(196,116,138,0.15);
+      padding: 1.2rem 2rem;
+      background-image: url('961dc97bf301b2f2650d8eb064020b23.jpg');
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid rgba(196,116,138,0.15);
     }
-    .nav-brand { font-family: 'Satisfy', cursive; font-size: 1.15rem; text-transform: none; letter-spacing: 0; color: var(--rose) !important; text-decoration: none; }
+    .nav-brand { font-family: 'Henny Penny', cursive; font-size: 1.15rem; text-transform: none; letter-spacing: 0; color: #f0d4c4 !important; text-decoration: none; }
+
+    .nav-toggle span { background: #f0d4c4; }
 
     /* dropdown */
     .nav-menu { position: relative; }
@@ -41,14 +46,15 @@
       border: 1px solid rgba(196,116,138,0.15);
       border-radius: 4px;
       box-shadow: 0 8px 24px rgba(155,123,138,0.12);
-      min-width: 140px;
+      min-width: 220px;
       flex-direction: column;
       overflow: hidden;
     }
     .nav-dropdown.open { display: flex; }
     .nav-dropdown a {
       color: var(--soft); text-decoration: none;
-      font-size: 0.75rem; letter-spacing: 0.13em; text-transform: uppercase;
+      font-family: 'Mountains of Christmas', cursive;
+      font-size: 1rem; letter-spacing: 0.05em; text-transform: none;
       padding: 0.9rem 1.4rem;
       transition: background 0.2s, color 0.2s;
     }
@@ -70,7 +76,7 @@
       gap: 0.6rem; user-select: none;
     }
     .scene-title {
-      font-family: 'Satisfy', cursive;
+      font-family: 'Henny Penny', cursive;
       font-size: clamp(2.2rem, 5vw, 3.5rem);
       color: var(--rose); text-align: center;
     }
@@ -211,17 +217,17 @@
       <span></span><span></span><span></span>
     </button>
     <div class="nav-dropdown" id="navDropdown">
-      <a href="#mailbox">write</a>
-      <a href="#shelf">the shelf</a>
-      <a href="#music">music</a>
-      <a href="#about">about</a>
+      <a href="#mailbox">Dear Lizzie</a>
+      <a href="#shelf">Lizzie's Reading Corner</a>
+      <a href="#music">Lizzie's Mixtape</a>
+      <a href="#about">A Note From Us</a>
     </div>
   </div>
 </nav>
 
 <section id="home">
   <div class="envelope-scene">
-    <div class="scene-title" id="sceneTitle">A Letter To Liz!</div>
+    <div class="scene-title" id="sceneTitle">Letters to Lizzie!</div>
 
     <div style="position:relative; width:380px; height:480px;">
       <div class="env-closed" id="envClosed" style="position:absolute;top:0;left:0;width:100%;min-height:unset;">
