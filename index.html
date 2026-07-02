@@ -8,8 +8,8 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --blush: #e8c9c9; --rose: #c4748a; --cream: #faf6f0;
-      --parchment: #f0e8dc; --mauve: #9b7b8a; --text: #5a4a52; --soft: #8a7a82;
+      --blush: #d4b8d4; --rose: #9b6e9b; --cream: #f5f0f8;
+      --parchment: #ede0f0; --mauve: #7a5a8a; --text: #4a3a52; --soft: #8a7a92;
     }
     html { scroll-behavior: smooth; }
     body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--text); font-weight: 300; overflow-x: hidden; }
@@ -17,7 +17,7 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1.2rem 2rem; background: rgba(250,246,240,0.93);
+      padding: 1.2rem 2rem; background: rgba(245,240,248,0.93);
       backdrop-filter: blur(6px); border-bottom: 1px solid rgba(196,116,138,0.15);
     }
     .nav-brand { font-family: 'Henny Penny', cursive; font-size: 1.15rem; text-transform: none; letter-spacing: 0; color: var(--rose) !important; text-decoration: none; }
@@ -39,7 +39,7 @@
     .nav-dropdown {
       display: none;
       position: absolute; top: 2.2rem; right: 0;
-      background: rgba(250,246,240,0.98);
+      background: rgba(245,240,248,0.98);
       border: 1px solid rgba(196,116,138,0.15);
       border-radius: 4px;
       box-shadow: 0 8px 24px rgba(155,123,138,0.12);
@@ -57,7 +57,29 @@
     }
     .nav-dropdown a:hover { background: rgba(196,116,138,0.08); color: var(--rose); }
 
-    section { min-height: 100vh; padding: 7rem 2rem 5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    section { min-height: 100vh; padding: 7rem 2rem 5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+
+    /* flourish removed */
+    .flourish { display: none; }
+
+    /* heart swirl divider */
+    .heart-divider {
+      width: 100%; max-width: 380px;
+      margin: 0 auto 1.2rem;
+      display: block;
+      opacity: 0.85;
+    }
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0; right: 0;
+      height: 30px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='30' viewBox='0 0 60 30'%3E%3Cpath d='M0 0 Q7.5 20 15 0 Q22.5 20 30 0 Q37.5 20 45 0 Q52.5 20 60 0 L60 30 L0 30 Z' fill='%23e8b8d4' opacity='0.6'/%3E%3Ccircle cx='15' cy='3' r='3' fill='%23e8b8d4' opacity='0.5'/%3E%3Ccircle cx='30' cy='3' r='3' fill='%23e8b8d4' opacity='0.5'/%3E%3Ccircle cx='45' cy='3' r='3' fill='%23e8b8d4' opacity='0.5'/%3E%3C/svg%3E");
+      background-repeat: repeat-x;
+      background-size: 60px 30px;
+      z-index: 10;
+      pointer-events: none;
+    }
     #home { background: var(--cream); position: relative; overflow: hidden; }
 
     .petal { display: none; }
@@ -236,32 +258,37 @@
     .btn-rec:hover { background: #a85e74; }
     .rec-sent { display: none; font-family: 'Playfair Display', serif; font-style: italic; color: var(--soft); font-size: 0.9rem; padding: 1rem 0; }
 
-    /* MUSIC SLIDER */
+    /* IPOD MUSIC PLAYER */
     #music { background: var(--parchment); }
-    .music-slider { width: 100%; max-width: 620px; overflow: hidden; }
-    .music-track { display: flex; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
-    .music-slide { min-width: 100%; display: flex; flex-direction: column; gap: 1.5rem; padding: 0 0.5rem; }
-    .music-label { }
-    .music-for-label { display: block; font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.88rem; color: var(--soft); margin-bottom: 0.8rem; line-height: 1.6; }
-    .music-song-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--mauve); margin-bottom: 0.2rem; }
-    .music-song-artist { font-size: 0.8rem; color: var(--soft); margin-bottom: 0.8rem; }
-    .music-song-note { font-size: 0.85rem; color: var(--text); line-height: 1.8; font-style: italic; border-left: 2px solid var(--blush); padding-left: 0.8rem; margin-bottom: 1rem; }
+    .ipod-scene { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+    .ipod-wrap { position: relative; width: 420px; }
+    .ipod-img { width: 100%; display: block; }
+    .ipod-screen {
+      position: absolute;
+      top: 18.5%; left: 5.8%;
+      width: 42.5%; height: 63%;
+      overflow: hidden;
+      background: #fff;
+    }
+    .ipod-album { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f5e8e8; }
+    .album-placeholder { font-size: 2.5rem; color: var(--blush); }
+    .ipod-info { text-align: center; max-width: 380px; }
+    .ipod-lyric { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.85rem; color: var(--soft); line-height: 1.7; margin-bottom: 0.6rem; }
+    .ipod-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--mauve); margin-bottom: 0.2rem; }
+    .ipod-artist { font-size: 0.78rem; color: var(--soft); margin-bottom: 1rem; }
     .spotify-btn {
-      display: inline-flex; align-items: center; gap: 0.4rem;
+      display: inline-block;
       background: #1DB954; color: white; text-decoration: none;
       padding: 0.5rem 1.2rem; border-radius: 20px;
       font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
-      font-family: 'Lato', sans-serif; font-weight: 400;
-      transition: background 0.2s; margin-bottom: 1rem; display: inline-block;
+      font-family: 'Lato', sans-serif;
+      transition: background 0.2s;
     }
     .spotify-btn:hover { background: #17a347; }
-    .spotify-embed iframe { width: 100%; }
-    .music-dots { display: flex; justify-content: center; gap: 0.6rem; margin-top: 1.5rem; }
+    .music-dots { display: flex; justify-content: center; gap: 0.6rem; margin-top: 0.5rem; }
     .music-dot { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--rose); background: transparent; cursor: pointer; transition: background 0.25s; padding: 0; }
     .music-dot.active { background: var(--rose); }
-
-    /* OLD MUSIC LIST */
-    .music-list, .music-item { display: none; }
+    .music-list, .music-item, .music-slider, .music-track, .music-slide { display: none; }
 
     #about { background: var(--cream); text-align: center; }
     .about-inner { max-width: 480px; }
@@ -331,7 +358,7 @@
 </div>
 
 <section id="mailbox">
-  <p class="section-eyebrow">write to her</p>
+  <img class="heart-divider" src="heart-doodle.png" alt="" />
   <h2 class="section-title">Dear Lizzie</h2>
   <p class="section-desc">she might not be able to read them, but we will. leave lizzie a letter — anything you'd want to say.</p>
   <div class="divider"></div>
@@ -348,7 +375,7 @@
 </section>
 
 <section id="shelf">
-  <p class="section-eyebrow">lizzie's bookshelf</p>
+  <img class="heart-divider" src="heart-doodle.png" alt="" />
   <h2 class="section-title">Lizzie's Reading Corner</h2>
   <p class="section-desc">this month's picks, handpicked for liz lovers 📚</p>
   <div class="divider"></div>
@@ -456,94 +483,39 @@
 </section>
 
 <section id="music">
-  <p class="section-eyebrow">listening corner</p>
+  <img class="heart-divider" src="heart-doodle.png" alt="" />
   <h2 class="section-title">Lizzie's Mixtape</h2>
   <p class="section-desc">songs that live in her world — play them, feel them, share them.</p>
   <div class="divider"></div>
 
-  <div class="music-slider">
-    <div class="music-track" id="musicTrack">
-
-      <!-- Song 1 -->
-      <div class="music-slide">
-        <div class="music-label">
-          <h3 class="music-song-title">Silver Springs</h3>
-          <p class="music-song-artist">Fleetwood Mac</p>
-          <p class="music-song-note">"time cast a spell on you, but you won't forget me"</p>
-          <a class="spotify-btn" href="https://open.spotify.com/track/7A6xLSBpwYuHbWfP1SkAnT" target="_blank">▶ open in spotify</a>
-        </div>
-        <div class="spotify-embed">
-          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7A6xLSBpwYuHbWfP1SkAnT?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  <div class="ipod-scene">
+    <div class="ipod-wrap">
+      <img src="ipod.png" class="ipod-img" alt="pink ipod" />
+      <!-- album art goes in the screen area -->
+      <div class="ipod-screen">
+        <div class="ipod-album" id="ipodAlbum">
+          <div class="album-placeholder" id="albumPlaceholder">♪</div>
+          <img id="albumArt" src="" alt="" style="display:none; width:100%; height:100%; object-fit:cover;" />
         </div>
       </div>
-
-      <!-- Song 2 -->
-      <div class="music-slide">
-        <div class="music-label">
-          <h3 class="music-song-title">bad idea right?</h3>
-          <p class="music-song-artist">Olivia Rodrigo</p>
-          <p class="music-song-note">"it's a bad idea, right? so i'm not gonna do it... but i'm on my way"</p>
-          <a class="spotify-btn" href="https://open.spotify.com/track/3IX0MhJAEvFKMDRNFOEWXe" target="_blank">▶ open in spotify</a>
-        </div>
-        <div class="spotify-embed">
-          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3IX0MhJAEvFKMDRNFOEWXe?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        </div>
-      </div>
-
-      <!-- Song 3 -->
-      <div class="music-slide">
-        <div class="music-label">
-          <h3 class="music-song-title">Let Down</h3>
-          <p class="music-song-artist">Radiohead</p>
-          <p class="music-song-note">"crushed like a bug in the ground... let down and hanging around"</p>
-          <a class="spotify-btn" href="https://open.spotify.com/track/7B9th9RgMCPrGhFMYfFKxH" target="_blank">▶ open in spotify</a>
-        </div>
-        <div class="spotify-embed">
-          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7B9th9RgMCPrGhFMYfFKxH?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        </div>
-      </div>
-
-      <!-- Song 4 -->
-      <div class="music-slide">
-        <div class="music-label">
-          <h3 class="music-song-title">Fresh Out the Slammer</h3>
-          <p class="music-song-artist">Taylor Swift</p>
-          <p class="music-song-note">"first thing that i do when i get out is come find you"</p>
-          <a class="spotify-btn" href="https://open.spotify.com/track/5vNRh3XBQS8BVjHBR9BIcN" target="_blank">▶ open in spotify</a>
-        </div>
-        <div class="spotify-embed">
-          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/5vNRh3XBQS8BVjHBR9BIcN?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        </div>
-      </div>
-
-      <!-- Song 5 -->
-      <div class="music-slide">
-        <div class="music-label">
-          <h3 class="music-song-title">Hit the Wall</h3>
-          <p class="music-song-artist">Gracie Abrams</p>
-          <p class="music-song-note">"i've been so good, i've been so good, i've been so good... till i hit the wall"</p>
-          <a class="spotify-btn" href="https://open.spotify.com/track/4ZtFanR9U6ndgddUvNcjcG" target="_blank">▶ open in spotify</a>
-        </div>
-        <div class="spotify-embed">
-          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4ZtFanR9U6ndgddUvNcjcG?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        </div>
-      </div>
-
     </div>
 
-    <div class="music-dots">
-      <button class="music-dot active" onclick="goToSong(0)"></button>
-      <button class="music-dot" onclick="goToSong(1)"></button>
-      <button class="music-dot" onclick="goToSong(2)"></button>
-      <button class="music-dot" onclick="goToSong(3)"></button>
-      <button class="music-dot" onclick="goToSong(4)"></button>
+    <!-- song info below ipod -->
+    <div class="ipod-info">
+      <p class="ipod-lyric" id="ipodLyric"></p>
+      <h3 class="ipod-title" id="ipodTitle"></h3>
+      <p class="ipod-artist" id="ipodArtist"></p>
+      <a class="spotify-btn" id="ipodSpotify" href="#" target="_blank">▶ open in spotify</a>
     </div>
+
+    <!-- dot navigation -->
+    <div class="music-dots" id="musicDots"></div>
   </div>
 </section>
 
 <section id="about">
   <div class="about-inner">
-    <p class="section-eyebrow">about this space</p>
+    <img class="heart-divider" src="heart-doodle.png" alt="" />
     <h2 class="section-title" style="margin-bottom:2rem;">A Note From Us 🌿</h2>
     <p>a community for anyone who has ever seen a piece of themselves in lizzie young. we're here to celebrate her fully — her grief, her softness, her rage, her stubborn hope.</p>
     <p>we curate books and music that feel like her world. we write her letters. we hold space for the parts of her that feel the most like us.</p>
@@ -560,15 +532,44 @@
     document.getElementById('recSent').style.display = 'block';
   });
 
-  // Music slider
+  // iPod music player
+  const songs = [
+    { title: 'Silver Springs', artist: 'Fleetwood Mac', lyric: '"time cast a spell on you, but you won\'t forget me"', spotify: 'https://open.spotify.com/track/6prax4dPmMFzMqxO5XCMHQ', art: '' },
+    { title: 'bad idea right?', artist: 'Olivia Rodrigo', lyric: '"it\'s a bad idea, right? so i\'m not gonna do it... but i\'m on my way"', spotify: 'https://open.spotify.com/track/3IX0MhJAEvFKMDRNFOEWXe', art: '' },
+    { title: 'Let Down', artist: 'Radiohead', lyric: '"crushed like a bug in the ground... let down and hanging around"', spotify: 'https://open.spotify.com/track/1HKCigSBDMLrFBGAFDSiSZ', art: '' },
+    { title: 'Fresh Out the Slammer', artist: 'Taylor Swift', lyric: '"first thing that i do when i get out is come find you"', spotify: 'https://open.spotify.com/track/5vNRh3XBQS8BVjHBR9BIcN', art: '' },
+    { title: 'Hit the Wall', artist: 'Gracie Abrams', lyric: '"i\'ve been so good, i\'ve been so good... till i hit the wall"', spotify: 'https://open.spotify.com/track/2JoJEhPsVNfCbJPCLOBPGK', art: '' },
+  ];
+
   let currentSong = 0;
-  function goToSong(n) {
+
+  function loadSong(n) {
+    const s = songs[n];
+    document.getElementById('ipodTitle').textContent = s.title;
+    document.getElementById('ipodArtist').textContent = s.artist;
+    document.getElementById('ipodLyric').textContent = s.lyric;
+    document.getElementById('ipodSpotify').href = s.spotify;
+    const art = document.getElementById('albumArt');
+    const placeholder = document.getElementById('albumPlaceholder');
+    if (s.art) {
+      art.src = s.art; art.style.display = 'block'; placeholder.style.display = 'none';
+    } else {
+      art.style.display = 'none'; placeholder.style.display = 'block';
+    }
+    document.querySelectorAll('.music-dot').forEach((d, i) => d.classList.toggle('active', i === n));
     currentSong = n;
-    document.getElementById('musicTrack').style.transform = `translateX(-${n * 100}%)`;
-    document.querySelectorAll('.music-dot').forEach((d, i) => {
-      d.classList.toggle('active', i === n);
-    });
   }
+
+  // build dots
+  const dotsEl = document.getElementById('musicDots');
+  songs.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'music-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => loadSong(i));
+    dotsEl.appendChild(d);
+  });
+
+  loadSong(0);
 
   // Book slider
   let currentSlide = 0;
