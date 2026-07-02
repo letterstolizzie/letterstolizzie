@@ -236,15 +236,32 @@
     .btn-rec:hover { background: #a85e74; }
     .rec-sent { display: none; font-family: 'Playfair Display', serif; font-style: italic; color: var(--soft); font-size: 0.9rem; padding: 1rem 0; }
 
+    /* MUSIC SLIDER */
     #music { background: var(--parchment); }
-    .music-list { width: 100%; max-width: 540px; display: flex; flex-direction: column; gap: 1rem; }
-    .music-item { display: flex; align-items: center; gap: 1.2rem; background: white; padding: 1.1rem 1.4rem; border-radius: 3px; border: 1px solid rgba(196,116,138,0.12); transition: transform 0.2s; }
-    .music-item:hover { transform: translateX(4px); }
-    .music-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--blush); min-width: 2rem; }
-    .music-info { flex: 1; }
-    .music-track { font-size: 0.88rem; color: var(--text); margin-bottom: 0.2rem; }
-    .music-artist { font-size: 0.73rem; color: var(--soft); }
-    .music-for { font-size: 0.65rem; color: var(--rose); letter-spacing: 0.08em; text-transform: uppercase; }
+    .music-slider { width: 100%; max-width: 620px; overflow: hidden; }
+    .music-track { display: flex; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
+    .music-slide { min-width: 100%; display: flex; flex-direction: column; gap: 1.5rem; padding: 0 0.5rem; }
+    .music-label { }
+    .music-for-label { display: block; font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.88rem; color: var(--soft); margin-bottom: 0.8rem; line-height: 1.6; }
+    .music-song-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--mauve); margin-bottom: 0.2rem; }
+    .music-song-artist { font-size: 0.8rem; color: var(--soft); margin-bottom: 0.8rem; }
+    .music-song-note { font-size: 0.85rem; color: var(--text); line-height: 1.8; font-style: italic; border-left: 2px solid var(--blush); padding-left: 0.8rem; margin-bottom: 1rem; }
+    .spotify-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: #1DB954; color: white; text-decoration: none;
+      padding: 0.5rem 1.2rem; border-radius: 20px;
+      font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+      font-family: 'Lato', sans-serif; font-weight: 400;
+      transition: background 0.2s; margin-bottom: 1rem; display: inline-block;
+    }
+    .spotify-btn:hover { background: #17a347; }
+    .spotify-embed iframe { width: 100%; }
+    .music-dots { display: flex; justify-content: center; gap: 0.6rem; margin-top: 1.5rem; }
+    .music-dot { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--rose); background: transparent; cursor: pointer; transition: background 0.25s; padding: 0; }
+    .music-dot.active { background: var(--rose); }
+
+    /* OLD MUSIC LIST */
+    .music-list, .music-item { display: none; }
 
     #about { background: var(--cream); text-align: center; }
     .about-inner { max-width: 480px; }
@@ -441,14 +458,86 @@
 <section id="music">
   <p class="section-eyebrow">listening corner</p>
   <h2 class="section-title">Lizzie's Mixtape</h2>
-  <p class="section-desc">songs that live in her world. suggest your own in the comments every friday.</p>
+  <p class="section-desc">songs that live in her world — play them, feel them, share them.</p>
   <div class="divider"></div>
-  <div class="music-list">
-    <div class="music-item"><div class="music-num">01</div><div class="music-info"><div class="music-track">Motion Sickness</div><div class="music-artist">Phoebe Bridgers</div></div><div class="music-for">for her rage</div></div>
-    <div class="music-item"><div class="music-num">02</div><div class="music-info"><div class="music-track">Sofia</div><div class="music-artist">Clairo</div></div><div class="music-for">for her softness</div></div>
-    <div class="music-item"><div class="music-num">03</div><div class="music-info"><div class="music-track">Supercut</div><div class="music-artist">Lorde</div></div><div class="music-for">for her memories</div></div>
-    <div class="music-item"><div class="music-num">04</div><div class="music-info"><div class="music-track">Ivy</div><div class="music-artist">Taylor Swift</div></div><div class="music-for">for her love</div></div>
-    <div class="music-item"><div class="music-num">05</div><div class="music-info"><div class="music-track">White Flag</div><div class="music-artist">Joseph</div></div><div class="music-for">for her resilience</div></div>
+
+  <div class="music-slider">
+    <div class="music-track" id="musicTrack">
+
+      <!-- Song 1 -->
+      <div class="music-slide">
+        <div class="music-label">
+          <h3 class="music-song-title">Silver Springs</h3>
+          <p class="music-song-artist">Fleetwood Mac</p>
+          <p class="music-song-note">"time cast a spell on you, but you won't forget me"</p>
+          <a class="spotify-btn" href="https://open.spotify.com/track/7A6xLSBpwYuHbWfP1SkAnT" target="_blank">▶ open in spotify</a>
+        </div>
+        <div class="spotify-embed">
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7A6xLSBpwYuHbWfP1SkAnT?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <!-- Song 2 -->
+      <div class="music-slide">
+        <div class="music-label">
+          <h3 class="music-song-title">bad idea right?</h3>
+          <p class="music-song-artist">Olivia Rodrigo</p>
+          <p class="music-song-note">"it's a bad idea, right? so i'm not gonna do it... but i'm on my way"</p>
+          <a class="spotify-btn" href="https://open.spotify.com/track/3IX0MhJAEvFKMDRNFOEWXe" target="_blank">▶ open in spotify</a>
+        </div>
+        <div class="spotify-embed">
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3IX0MhJAEvFKMDRNFOEWXe?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <!-- Song 3 -->
+      <div class="music-slide">
+        <div class="music-label">
+          <h3 class="music-song-title">Let Down</h3>
+          <p class="music-song-artist">Radiohead</p>
+          <p class="music-song-note">"crushed like a bug in the ground... let down and hanging around"</p>
+          <a class="spotify-btn" href="https://open.spotify.com/track/7B9th9RgMCPrGhFMYfFKxH" target="_blank">▶ open in spotify</a>
+        </div>
+        <div class="spotify-embed">
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7B9th9RgMCPrGhFMYfFKxH?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <!-- Song 4 -->
+      <div class="music-slide">
+        <div class="music-label">
+          <h3 class="music-song-title">Fresh Out the Slammer</h3>
+          <p class="music-song-artist">Taylor Swift</p>
+          <p class="music-song-note">"first thing that i do when i get out is come find you"</p>
+          <a class="spotify-btn" href="https://open.spotify.com/track/5vNRh3XBQS8BVjHBR9BIcN" target="_blank">▶ open in spotify</a>
+        </div>
+        <div class="spotify-embed">
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/5vNRh3XBQS8BVjHBR9BIcN?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <!-- Song 5 -->
+      <div class="music-slide">
+        <div class="music-label">
+          <h3 class="music-song-title">Hit the Wall</h3>
+          <p class="music-song-artist">Gracie Abrams</p>
+          <p class="music-song-note">"i've been so good, i've been so good, i've been so good... till i hit the wall"</p>
+          <a class="spotify-btn" href="https://open.spotify.com/track/4ZtFanR9U6ndgddUvNcjcG" target="_blank">▶ open in spotify</a>
+        </div>
+        <div class="spotify-embed">
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4ZtFanR9U6ndgddUvNcjcG?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="music-dots">
+      <button class="music-dot active" onclick="goToSong(0)"></button>
+      <button class="music-dot" onclick="goToSong(1)"></button>
+      <button class="music-dot" onclick="goToSong(2)"></button>
+      <button class="music-dot" onclick="goToSong(3)"></button>
+      <button class="music-dot" onclick="goToSong(4)"></button>
+    </div>
   </div>
 </section>
 
@@ -470,6 +559,16 @@
     document.querySelector('.rec-form').style.display = 'none';
     document.getElementById('recSent').style.display = 'block';
   });
+
+  // Music slider
+  let currentSong = 0;
+  function goToSong(n) {
+    currentSong = n;
+    document.getElementById('musicTrack').style.transform = `translateX(-${n * 100}%)`;
+    document.querySelectorAll('.music-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === n);
+    });
+  }
 
   // Book slider
   let currentSlide = 0;
